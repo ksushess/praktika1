@@ -94,6 +94,30 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>9.0.7</version>
+                <configuration>
+                    <skipUpdate>true</skipUpdate>
+                    <autoUpdate>false</autoUpdate>
+                    <nvdApiEnabled>false</nvdApiEnabled>
+                    <format>HTML</format>
+                    <outputDirectory>target</outputDirectory>
+                    <suppressionFiles>
+                        <suppressionFile>dependency-check-suppressions.xml</suppressionFile>
+                    </suppressionFiles>
+                    <failOnError>false</failOnError> <!-- Не падать при ошибках -->
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 
