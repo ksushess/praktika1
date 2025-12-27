@@ -73,12 +73,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-dependency-check-
 
-      - name: Run OWASP Dependency Check with offline mode
-        run: |
-          mvn org.owasp:dependency-check-maven:check \
-            -DdependencyCheck.skipUpdate=true \
-            -DdependencyCheck.format=HTML \
-            -DdependencyCheck.suppressionFiles=dependency-check-suppressions.xml
+      - name: Run OWASP Dependency Check
+        run: mvn dependency-check:check
 
       - name: Upload Dependency Check Report
         uses: actions/upload-artifact@v4

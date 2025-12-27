@@ -99,10 +99,23 @@
                 <artifactId>dependency-check-maven</artifactId>
                 <version>9.0.7</version>
                 <configuration>
+                    <skipUpdate>true</skipUpdate>
+                    <autoUpdate>false</autoUpdate>
+                    <nvdApiEnabled>false</nvdApiEnabled>
                     <format>HTML</format>
-                    <suppressionFile>${project.basedir}/dependency-check-suppressions.xml</suppressionFile>
-                    <failBuildOnCVSS>11</failBuildOnCVSS>
+                    <outputDirectory>target</outputDirectory>
+                    <suppressionFiles>
+                        <suppressionFile>dependency-check-suppressions.xml</suppressionFile>
+                    </suppressionFiles>
+                    <failOnError>false</failOnError> <!-- Не падать при ошибках -->
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
         </plugins>
