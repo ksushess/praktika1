@@ -65,8 +65,20 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: OWASP Dependency Check
-        run: mvn org.owasp:dependency-check-maven:check
+      - name: Cache OWASP Dependency Check data
+        uses: actions/cache@v4
+        with:
+          path: ~/.dependency-check/data
+          key: ${{ runner.os }}-dependency-check-${{ hashFiles('pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-dependency-check-
+
+      - name: Run OWASP Dependency Check with offline mode
+        run: |
+          mvn org.owasp:dependency-check-maven:check \
+            -DdependencyCheck.skipUpdate=true \
+            -DdependencyCheck.format=HTML \
+            -DdependencyCheck.suppressionFiles=dependency-check-suppressions.xml
 
       - name: Upload Dependency Check Report
         uses: actions/upload-artifact@v4
